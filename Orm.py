@@ -22,6 +22,17 @@ def connect(**args):
     except Exception as e:
         print("Connection failed...",e)
     
+
+preTableName = ""
+fun = ""
+def pre(func,tableName):
+    global preTableName
+    global fun
+    
+    preTableName = tableName
+    fun = func
+    
+    
     
 
 DataTypes = {
@@ -31,16 +42,56 @@ DataTypes = {
             "date": "date"
         }   
 
-
+ColNames = ()
 def createTable(TName,**cols):
-    query = f"create table if not exists {TName} ("
+    global ColNames
+    query = f"create table if not exists {TName} ( id int primary key auto_increment," 
     for colName,j in cols.items():
-        dType = DataTypes[j]
-        query += f"{colName} {dType},"
+       if colName == "id" or colName == "Id":
+           continue
+       dType = DataTypes[j]
+       query += f"{colName} {dType},"
+       ColNames += (colName,)
         
     query = query[:-1]
     query += ");"
-    print(query)
-    cursor.execute(query)
-    con.commit()
+    try:
+        cursor.execute(query)
+        con.commit()
+        print("Table created successfully...")
+    except Exception as e:
+        print("Table creation failed...",e)
     
+    
+
+def insertOne(TName,*values):    
+    query = f"insert into {TName} ({','.join(ColNames)}) values {values};"
+    if preTableName == TName:
+        fun(values[0])
+    try:
+        cursor.execute(query)
+        con.commit()
+        print("Record inserted successfully...")
+    except Exception as e:
+        print("Record insertion failed...",e)
+
+    
+def findAll(TName):
+    query = f"select * from {TName}"
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            print(row)
+    except Exception as e:
+        print("Query failed...",e)
+    
+def findById(TName,id):
+    query = f"select * from {TName} where id = {id}"
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        for row in result:
+            print(row)
+    except Exception as e:
+        print("Query failed...",e)
