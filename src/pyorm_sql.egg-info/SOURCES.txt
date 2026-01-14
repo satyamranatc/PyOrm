@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+src/pyorm/__init__.py
+src/pyorm/orm.py
+src/pyorm_sql.egg-info/PKG-INFO
+src/pyorm_sql.egg-info/SOURCES.txt
+src/pyorm_sql.egg-info/dependency_links.txt
+src/pyorm_sql.egg-info/requires.txt
+src/pyorm_sql.egg-info/top_level.txt

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyorm-sql"
+version = "0.1.0"
+authors = [
+  { name="Satyam Rana", email="your-email@example.com" },
+]
+description = "A lightweight Mongoose-inspired SQL ORM for Python"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "mysql-connector-python>=8.0.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/satyamrana/PyOrm"
+"Bug Tracker" = "https://github.com/satyamrana/PyOrm/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]

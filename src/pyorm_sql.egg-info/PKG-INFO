@@ -1,0 +1,64 @@
+Metadata-Version: 2.4
+Name: pyorm-sql
+Version: 0.1.0
+Summary: A lightweight Mongoose-inspired SQL ORM for Python
+Author-email: Satyam Rana <your-email@example.com>
+Project-URL: Homepage, https://github.com/satyamrana/PyOrm
+Project-URL: Bug Tracker, https://github.com/satyamrana/PyOrm/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: mysql-connector-python>=8.0.0
+Dynamic: license-file
+
+# PyOrm-SQL
+
+A lightweight, Mongoose-inspired SQL ORM for Python with a focus on developer experience, safety, and modern architectural patterns.
+
+## Features
+
+- **Declarative Schema**: Define models as Python classes.
+- **Mongoose-like Queries**: Chainable query builder with double-underscore operators (`age__gt=20`).
+- **Identity Map (Session)**: Ensures object uniqueness across queries.
+- **Dirty Tracking**: Optimized `UPDATE` queries that only send modified fields.
+- **Lazy Loading**: Automatic relationship fetching via `ForeignKeyField`.
+- **Connection Pooling**: Built-in support for MySQL connection pooling.
+
+## Installation
+
+```bash
+pip install pyorm-sql
+```
+
+## Quick Start
+
+```python
+from pyorm import connect, Model, StringField, IntField
+
+# 1. Connect
+connect(host="localhost", user="root", password="your_password", database="test_db")
+
+# 2. Define
+class User(Model):
+    name = StringField(required=True)
+    age = IntField(default=18)
+
+# 3. Synchronize
+User.init_table()
+
+# 4. Use
+u = User(name="Satyam", age=25).save()
+print(f"Created user with ID: {u.id}")
+
+# Query
+user = User.find_one(name="Satyam")
+user.age = 26
+user.save() # Performs partial update
+```
+
+## License
+
+MIT
